@@ -1,0 +1,10 @@
+# Ignora arquivos compilados (codigo de maquina)
+*.class
+bin/
+
+# Ignora configuracoes da IDE
+.vscode/
+
+# Ignora a pasta da documentacao que sera gerada
+javadoc/
+docs/
