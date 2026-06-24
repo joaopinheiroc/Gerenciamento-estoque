@@ -1,3 +1,5 @@
+package model;
+
 public class ProdutoEletronico extends Produto {
 
     private int garantiaMeses;

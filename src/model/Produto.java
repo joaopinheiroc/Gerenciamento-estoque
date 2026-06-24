@@ -12,6 +12,10 @@ public abstract class Produto implements Exibivel {
     private Fornecedor fornecedor;
     
     public Produto(int id, String nome, double preco, int quantidade, Categoria categoria, Fornecedor fornecedor) {
+        if (quantidade < 0) {
+            throw new QuantidadeInvalidaException("Erro de cadastro: A quantidade inicial não pode ser negativa!");
+        }
+
         this.id = id;
         this.nome = nome;
         this.preco = preco;
@@ -55,8 +59,8 @@ public abstract class Produto implements Exibivel {
         if(quantidade <= 0){
            throw new QuantidadeInvalidaException("A quantidade a ser removida deve ser maior que zero!");
         }
-        if(this.quantidade < quantidade) {
-            throw new EstoqueInsuficienteException("Estoque insuficiente para o produto: " + this.nome);
+        if (this.quantidade - quantidade < 0) {
+            throw new EstoqueInsuficienteException("Estoque insuficiente! Você tentou remover " + quantidade + ", mas só há " + this.quantidade + " disponíveis.");
         }
         this.quantidade -= quantidade;
     }
