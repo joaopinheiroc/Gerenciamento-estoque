@@ -1,3 +1,8 @@
+package model;
+
+import exceptions.EstoqueInsuficienteException;
+import exceptions.QuantidadeInvalidaException;
+
 public abstract class Produto implements Exibivel {
     private int id;
     private String nome;
@@ -39,22 +44,19 @@ public abstract class Produto implements Exibivel {
         return fornecedor;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
     public void adicionarEstoque(int quantidade) {
         if (quantidade <= 0) {
-            throw new IllegalArgumentException("A quantidade a ser adicionada deve ser maior que zero!");
+            throw new QuantidadeInvalidaException("A quantidade a ser adicionada deve ser maior que zero!");
         }
         this.quantidade += quantidade;
     }
+
     public void removerEstoque(int quantidade) {
         if(quantidade <= 0){
-           throw new IllegalArgumentException("A quantidade a ser removida deve ser maior que zero!");
+           throw new QuantidadeInvalidaException("A quantidade a ser removida deve ser maior que zero!");
         }
         if(this.quantidade < quantidade) {
-            throw new IllegalArgumentException("Estoque insuficiente");
+            throw new EstoqueInsuficienteException("Estoque insuficiente para o produto: " + this.nome);
         }
         this.quantidade -= quantidade;
     }
