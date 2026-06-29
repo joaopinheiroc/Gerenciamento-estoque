@@ -1,13 +1,35 @@
-# Trabalho Final de POO: Sistema de Gerenciamento de Estoque
+# Sistema de Gerenciamento de Estoque
 
-Este repositório contém o código-fonte do Sistema de Gerenciamento de Estoque de Mercado, desenvolvido como trabalho final para a disciplina de Programação Orientada a Objetos (POO). O sistema foi construído na linguagem Java.
+Este projeto acadêmico da cadeira de POO é uma aplicação em linha de comando (CLI) desenvolvida em Java para facilitar o controle de entrada e saída de mercadorias
+---
 
-## Descrição Geral
+## Funcionalidades
 
-O objetivo principal da aplicação é realizar o controle de mercadorias armazenadas no estoque de um mercado. O sistema permite operações fundamentais como cadastro, listagem, busca e movimentação de produtos. A interface com o usuário é feita inteiramente via terminal, utilizando menus baseados em texto para a execução das funcionalidades.
+O sistema oferece um menu interativo com validações para evitar entradas incorretas (como valores negativos). Você pode:
 
-## Funcionalidades do Sistema
+* **Adicionar Produto:** Cadastrar novos itens com suas informações básicas.
+* **Listar Produtos:** Visualizar todos os itens armazenados no sistema.
+* **Buscar Produto por ID:** Encontrar rapidamente os detalhes de um item específico.
+* **Dar Entrada no Estoque:** Adicionar quantidades a produtos já existentes.
+* **Dar Saída no Estoque:** Registrar a venda ou uso de um item, reduzindo sua quantidade.
 
-* **Cadastro de Produtos:** Armazenamento de informações como identificador, nome, preço, quantidade em estoque, categoria e fornecedor.
-* **Controle de Movimentação:** Registro de entrada e saída de mercadorias para atualização das quantidades em estoque.
-* **Gestão de Produtos Específicos:** Diferenciação entre tipos de produtos. O sistema adota a classe `LocalDate` da (java.time) para o controle da data de validade de produtos perecíveis, além de registrar atributos específicos para produtos eletrônicos, como o tempo de garantia.
+---
+
+## Tecnologias e Estrutura
+
+O código foi construído utilizando boas práticas de Programação Orientada a Objetos (POO):
+
+* **Java:** Linguagem base da aplicação.
+* **java.time:** Utilização da biblioteca nativa do Java para manipulação e registro preciso de datas e horários nas operações do sistema.
+* **Padrão MVC:** Separação clara de responsabilidades (Model, Views, Controller).
+* **Tratamento de Dados:** Uso de laços de repetição e da classe `Scanner` para garantir interatividade à prova de falhas, além de listas (`Collections`) para o gerenciamento de dados em memória.
+
+---
+
+## Como executar
+
+Para rodar o projeto localmente, siga estes passos:
+
+1. Certifique-se de ter o Java (JDK) instalado no seu computador.
+2. Faça o clone ou baixe os arquivos deste repositório.
+3. Localize a classe principal (a que contém o método `main`) e execute-a para iniciar o sistema no console.
