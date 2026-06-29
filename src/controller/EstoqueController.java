@@ -33,14 +33,14 @@ public class EstoqueController {
                         view.exibirDetalhesProduto(produtoEncontrado);
                         break;
                     case 4:
-                        int idEntrada = view.lerInteiro("ID: ");
-                        int qtdEntrada = view.lerInteiro("Quantidade: ");
+                        int idEntrada = view.lerInteiroPositivo("ID: ");
+                        int qtdEntrada = view.lerInteiroPositivo("Quantidade: ");
                         service.darEntradaEstoque(idEntrada, qtdEntrada);
                         view.exibirMensagem("Entrada realizada com sucesso");
                         break;
                     case 5:
-                        int idSaida = view.lerInteiro("ID: ");
-                        int qtdSaida = view.lerInteiro("Quantidade a ser removida: ");
+                        int idSaida = view.lerInteiroPositivo("ID: ");
+                        int qtdSaida = view.lerInteiroPositivo("Quantidade a ser removida: ");
                         service.darSaidaEstoque(idSaida, qtdSaida);
                         view.exibirMensagem("Saída realizada!");
                         break;
@@ -60,10 +60,13 @@ public class EstoqueController {
 
         private void cadastrar() {
             int tipo = view.lerInteiro("1-Eletrônico, 2-Perecível: ");
-            int id = view.lerInteiro("ID: ");
+            int id = view.lerInteiroPositivo("ID: ");
+            if(service.existeProdutoComId(id)) {
+                throw new IllegalArgumentException(" o ID " + id + " Já está em uso!");
+            }
             String nome = view.lerString("Nome: ");
-            double preco = view.lerDouble("Preço: ");
-            int qtd = view.lerInteiro("Quantidade: ");
+            double preco = view.lerDoublePositivo("Preço: ");
+            int qtd = view.lerInteiroPositivo("Quantidade: ");
 
             String nomeCategoria = view.lerString("Categoria: ");
             Categoria cat =  new Categoria(nomeCategoria); 

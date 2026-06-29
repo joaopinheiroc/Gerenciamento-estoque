@@ -18,7 +18,19 @@ public class EstoqueService {
         if (produto == null) {
             throw new IllegalArgumentException("Produto nulo!");
         }
+        if (existeProdutoComId(produto.getId())) {
+            throw new IllegalArgumentException("Erro Crítico: Tentativa de cadastrar ID duplicado!");
+        }
         produtos.add(produto);
+    }
+
+    public boolean existeProdutoComId(int id) {
+        for (Produto p : produtos) {
+            if (p.getId() == id) {
+                return true; 
+            }
+        }
+        return false; 
     }
 
     public List<Produto> listarProdutos() {

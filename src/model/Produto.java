@@ -15,7 +15,9 @@ public abstract class Produto implements Exibivel {
         if (quantidade < 0) {
             throw new QuantidadeInvalidaException("Erro de cadastro: A quantidade inicial não pode ser negativa!");
         }
-
+        if (preco < 0 ) {
+            throw new IllegalArgumentException("Preço não pode ser negativo!"); 
+        }
         this.id = id;
         this.nome = nome;
         this.preco = preco;

@@ -39,6 +39,21 @@ public class TerminalView {
         scanner.nextLine();
         return valor;
     }
+    
+    public int lerInteiroPositivo(String mensagem) {
+        int valor;
+        do {
+            System.out.print(mensagem);
+            valor = scanner.nextInt();
+            scanner.nextLine(); 
+            
+            if (valor < 0) {
+                System.out.println("Erro: O valor não pode ser negativo. Digite novamente!");
+            }
+        } while (valor < 0);
+        
+        return valor;
+    }
 
     public String lerString(String mensagem) {
         System.out.print(mensagem);
@@ -52,6 +67,20 @@ public class TerminalView {
         return valor;
     }
 
+    public double lerDoublePositivo(String mensagem) {
+        double valor;
+        do {
+            System.out.print(mensagem);
+            valor = scanner.nextDouble();
+            scanner.nextLine(); 
+            
+            if (valor < 0) {
+                System.out.println("Erro: O valor não pode ser negativo. Digite novamente!");
+            }
+        } while (valor < 0);
+        
+        return valor;
+    }
     public void exibirListaDeProdutos(List<Produto> produtos) {
         System.out.println("\n=== PRODUTOS EM ESTOQUE ===");
         if(produtos.isEmpty()) {
