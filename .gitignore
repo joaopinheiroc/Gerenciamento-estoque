@@ -4,7 +4,3 @@ bin/
 
 # Ignora configuracoes da IDE
 .vscode/
-
-# Ignora a pasta da documentacao que sera gerada
-javadoc/
-docs/
