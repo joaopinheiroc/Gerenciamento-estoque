@@ -4,18 +4,35 @@ import model.Produto;
 import java.util.Scanner;
 import java.util.List;
 
+/**
+ * Camada de visualização (View) baseada em console.
+ * Responsável por gerenciar toda a interação direta com o usuário,
+ * centralizando a renderização de menus, formatação de listagens 
+ * e mecanismos de entrada de dados via terminal.
+ */
 public class TerminalView {
     
     private Scanner scanner;
     
+    /**
+     * Construtor padrão que inicializa o leitor de fluxo de entrada do console.
+     */
     public TerminalView() {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Exibe uma mensagem textual comum acompanhada de uma quebra de linha.
+     *
+     * @param mensagem O texto informativo ou de alerta a ser exibido.
+     */
     public void exibirMensagem(String mensagem) {
         System.out.println(mensagem);
     }
 
+    /**
+     * Renderiza o cabeçalho e todas as opções operacionais do menu principal.
+     */
     public void exibirMenu() {
         System.out.println("\n=== SISTEMA DE GERENCIAMENTO DE ESTOQUE ===");
         System.out.println("1 - Adicionar Produto");
@@ -26,6 +43,11 @@ public class TerminalView {
         System.out.println("0 - Sair");
     }
 
+    /**
+     * Captura o número digitado pelo usuário correspondente à opção do menu.
+     *
+     * @return O número inteiro da opção selecionada.
+     */
     public int lerOpcao() {
         System.out.print("Escolha uma opção: ");
         int opcao = scanner.nextInt();
@@ -33,6 +55,12 @@ public class TerminalView {
         return opcao;
     }
 
+    /**
+     * Exibe um enunciado instrutivo e captura um número inteiro genérico.
+     *
+     * @param mensagem O texto explicativo exibido antes da inserção do dado.
+     * @return O número inteiro fornecido pelo usuário.
+     */
     public int lerInteiro(String mensagem) {
         System.out.print(mensagem);
         int valor = scanner.nextInt();
@@ -40,6 +68,13 @@ public class TerminalView {
         return valor;
     }
     
+    /**
+     * Solicita a digitação de um número inteiro e força a repetição da leitura 
+     * enquanto o valor inserido for negativo, blindando a entrada da interface.
+     *
+     * @param mensagem O texto explicativo exibido antes da inserção do dado.
+     * @return Um valor inteiro maior ou igual a zero garantido.
+     */
     public int lerInteiroPositivo(String mensagem) {
         int valor;
         do {
@@ -55,11 +90,23 @@ public class TerminalView {
         return valor;
     }
 
+    /**
+     * Exibe um enunciado instrutivo e captura uma linha de texto.
+     *
+     * @param mensagem O texto explicativo exibido antes da inserção do dado.
+     * @return A sequência de caracteres digitada pelo usuário.
+     */
     public String lerString(String mensagem) {
         System.out.print(mensagem);
         return scanner.nextLine();
     }
 
+    /**
+     * Exibe um enunciado instrutivo e captura um valor numérico com ponto flutuante (double).
+     *
+     * @param mensagem O texto explicativo exibido antes da inserção do dado.
+     * @return O valor double fornecido pelo usuário.
+     */
     public double lerDouble(String mensagem) {
         System.out.print(mensagem);
         double valor = scanner.nextDouble();
@@ -67,6 +114,13 @@ public class TerminalView {
         return valor;
     }
 
+    /**
+     * Solicita a digitação de um número double e força a repetição da leitura 
+     * enquanto o valor inserido for negativo, garantindo consistência para preços.
+     *
+     * @param mensagem O texto explicativo exibido antes da inserção do dado.
+     * @return Um valor double maior ou igual a zero garantido.
+     */
     public double lerDoublePositivo(String mensagem) {
         double valor;
         do {
@@ -81,6 +135,13 @@ public class TerminalView {
         
         return valor;
     }
+
+    /**
+     * Exibe a listagem completa dos produtos contidos na coleção recebida.
+     * Caso a lista esteja vazia, apresenta uma mensagem informativa específica.
+     *
+     * @param produtos A coleção de objetos estruturados do tipo Produto a ser impressa.
+     */
     public void exibirListaDeProdutos(List<Produto> produtos) {
         System.out.println("\n=== PRODUTOS EM ESTOQUE ===");
         if(produtos.isEmpty()) {
@@ -93,6 +154,12 @@ public class TerminalView {
         }
     }
 
+    /**
+     * Exibe os dados detalhados de um produto específico.
+     * Caso o objeto recebido seja nulo, emite um aviso de não localização.
+     *
+     * @param produto O objeto do produto cujas informações serão renderizadas.
+     */
     public void exibirDetalhesProduto(Produto produto) {
         System.out.println("\n=== DETALHES DO PRODUTO ===");
         if(produto != null) {

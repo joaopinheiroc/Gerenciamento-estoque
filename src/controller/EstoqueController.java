@@ -7,10 +7,22 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * Controlador do sistema de gerenciamento de estoque.
+ * Atua como o cérebro do padrão MVC, intermediando a comunicação entre 
+ * a interface de usuário baseada em console (TerminalView) e as regras 
+ * de negócio (EstoqueService).
+ */
 public class EstoqueController {
     private EstoqueService service = new EstoqueService();
     private TerminalView view = new TerminalView();
 
+    /**
+     * Inicializa e mantém o ciclo de vida principal do sistema.
+     * Gerencia o loop do menu de opções, direciona a execução para as 
+     * respectivas funcionalidades escolhidas pelo usuário e centraliza 
+     * o tratamento global de exceções para evitar que o programa caia.
+     */
     public void iniciarSistema() {
         int opcao = -1;
     
@@ -50,48 +62,55 @@ public class EstoqueController {
                     default:
                         view.exibirMensagem("Opção inválida.");
                 
-                    }
-                } catch (Exception erro) {
-                    view.exibirMensagem("Erro:" + erro.getMessage());
                 }
-
-            } while (opcao != 0);
-        }
-
-        private void cadastrar() {
-            int tipo = view.lerInteiro("1-Eletrônico, 2-Perecível: ");
-            int id = view.lerInteiroPositivo("ID: ");
-            if(service.existeProdutoComId(id)) {
-                throw new IllegalArgumentException(" o ID " + id + " Já está em uso!");
+            } catch (Exception erro) {
+                view.exibirMensagem("Erro:" + erro.getMessage());
             }
-            String nome = view.lerString("Nome: ");
-            double preco = view.lerDoublePositivo("Preço: ");
-            int qtd = view.lerInteiroPositivo("Quantidade: ");
 
-            String nomeCategoria = view.lerString("Categoria: ");
-            Categoria cat =  new Categoria(nomeCategoria); 
-
-            String nomeFornecedor = view.lerString("Fornecedor: ");
-            String telefoneFornecedor = view.lerString("Telefone do fornecedor: ");
-            Fornecedor forn = new Fornecedor(nomeFornecedor, telefoneFornecedor);
-
-            if (tipo == 1) {
-                int garantia = view.lerInteiro("Garantia em meses: ");
-                ProdutoEletronico eletronico =  new ProdutoEletronico(id, nome, preco, qtd, cat, forn, garantia);
-                service.adicionarProduto(eletronico);
-                view.exibirMensagem("Produto eletrônico cadastrado!");
-            }
-            else if (tipo == 2) {
-                String dataString = view.lerString("Validade (DD/MM/AAAA)");
-                DateTimeFormatter formatoBrasileiro = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate dataValidade = LocalDate.parse(dataString, formatoBrasileiro);
-
-                ProdutoPerecivel perecivel = new ProdutoPerecivel(id, nome, preco, qtd, cat, forn, dataValidade);
-                service.adicionarProduto(perecivel);
-                view.exibirMensagem("Produto perecível Cadastrado!");
-            } else {
-                view.exibirMensagem("Tipo inválido!");
-            }
-        }
+        } while (opcao != 0);
     }
 
+    /**
+     * Orquestra o fluxo de coleta de dados e inserção de novos produtos.
+     * Captura as propriedades básicas e os objetos associados (Categoria e Fornecedor),
+     * interrompendo o processo imediatamente caso seja detectado um ID duplicado.
+     * Ao final, ramifica a criação de acordo com o tipo específico escolhido.
+     *
+     * @throws IllegalArgumentException Se o ID informado já estiver cadastrado no sistema.
+     */
+    private void cadastrar() {
+        int tipo = view.lerInteiro("1-Eletrônico, 2-Perecível: ");
+        int id = view.lerInteiroPositivo("ID: ");
+        if(service.existeProdutoComId(id)) {
+            throw new IllegalArgumentException(" o ID " + id + " Já está em uso!");
+        }
+        String nome = view.lerString("Nome: ");
+        double preco = view.lerDoublePositivo("Preço: ");
+        int qtd = view.lerInteiroPositivo("Quantidade: ");
+
+        String nomeCategoria = view.lerString("Categoria: ");
+        Categoria cat =  new Categoria(nomeCategoria); 
+
+        String nomeFornecedor = view.lerString("Fornecedor: ");
+        String telefoneFornecedor = view.lerString("Telefone do fornecedor: ");
+        Fornecedor forn = new Fornecedor(nomeFornecedor, telefoneFornecedor);
+
+        if (tipo == 1) {
+            int garantia = view.lerInteiro("Garantia em meses: ");
+            ProdutoEletronico eletronico =  new ProdutoEletronico(id, nome, preco, qtd, cat, forn, garantia);
+            service.adicionarProduto(eletronico);
+            view.exibirMensagem("Produto eletrônico cadastrado!");
+        }
+        else if (tipo == 2) {
+            String dataString = view.lerString("Validade (DD/MM/AAAA)");
+            DateTimeFormatter formatoBrasileiro = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataValidade = LocalDate.parse(dataString, formatoBrasileiro);
+
+            ProdutoPerecivel perecivel = new ProdutoPerecivel(id, nome, preco, qtd, cat, forn, dataValidade);
+            service.adicionarProduto(perecivel);
+            view.exibirMensagem("Produto perecível Cadastrado!");
+        } else {
+            view.exibirMensagem("Tipo inválido!");
+        }
+    }
+}
